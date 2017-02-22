@@ -1,6 +1,7 @@
 package com.pts4.game.states;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -10,8 +11,11 @@ import com.badlogic.gdx.utils.Array;
  */
 
 public class PlayState extends State {
+    Texture train;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
+        train = new Texture("images/train.png");
     }
 
     @Override
