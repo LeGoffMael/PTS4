@@ -39,8 +39,8 @@ public class PlayState extends State {
         //On détermine la seconde position par rapport à la première
         groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + background_ground.getWidth() / 4, 0);
 
-        this.train = new Texture("images/train.png");
-        this.train_front = new Texture("images/train_front.png");
+        this.train = new Texture("images/trains/train.png");
+        this.train_front = new Texture("images/trains/train_front.png");
         this.character = new Character(50 , this.train.getHeight());
 
         //Création d'un obstacle
