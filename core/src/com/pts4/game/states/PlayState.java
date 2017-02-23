@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.PTS4;
 import com.pts4.game.sprites.Character;
+import com.pts4.game.sprites.Obstacle;
+import com.pts4.game.sprites.TrafficLight;
 
 /**
  * Created by Le Goff Maël on 22/02/2017.
@@ -20,6 +22,8 @@ public class PlayState extends State {
 
     private Texture train, train_front;
     private Character character;
+
+    private TrafficLight Tlight;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -37,6 +41,9 @@ public class PlayState extends State {
         this.train = new Texture("images/train.png");
         this.train_front = new Texture("images/train_front.png");
         this.character = new Character(50 , this.train.getHeight());
+
+        //Création d'un obstacle
+        this.Tlight = new TrafficLight(500,0,1);
     }
 
     @Override
@@ -75,6 +82,9 @@ public class PlayState extends State {
         sb.draw(train_front, camera.position.x, 0);
 
         sb.draw(character.getTexture(), character.getPosition().x, character.getPosition().y);
+
+        //Dessin d'un obstacle
+        sb.draw(Tlight.img(),Tlight.posObstacle().x,Tlight.posObstacle().y);
 
         sb.end();
     }
