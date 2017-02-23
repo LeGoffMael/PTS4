@@ -16,7 +16,7 @@ public abstract class Obstacle {
 
     /**
      * Constructeur
-     * @param x
+     * @param x position
      * @param y
      * @param z
      */
