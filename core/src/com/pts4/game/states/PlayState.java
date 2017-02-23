@@ -71,9 +71,8 @@ public class PlayState extends State {
         //On place le ciel au dessus du sol
         sb.draw(background_sky, camera.position.x - PTS4.WIDTH / 4, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4, PTS4.WIDTH / 2, background_sky.getHeight() / 4);
 
-        //sb.draw(train, camera.position.x - train.getWidth(), 0);
-        sb.draw(train, camera.position.x - train.getWidth() / 2, 0);
-        //sb.draw(train_front, camera.position.x, 0);
+        sb.draw(train, camera.position.x - train.getWidth(), 0);
+        sb.draw(train_front, camera.position.x, 0);
 
         sb.draw(character.getTexture(), character.getPosition().x, character.getPosition().y);
 
