@@ -1,6 +1,7 @@
 package com.pts4.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -8,15 +9,26 @@ import com.badlogic.gdx.math.Vector3;
  */
 
 public class Character {
+    //Represente la chute du personnage
+    private static final int GRAVITY = -15;
+
+    private int y_initial;
+
     private Vector3 position; //De profondeur z de 0 (1er plan) à 2 (dernier plan)
     private Vector3 velocity;
     private Texture character;
 
+    private Rectangle hitbox;
+
     public Character(int x, int y) {
+        this.y_initial = y;
         this.position = new Vector3(x, y, 1);
         this.velocity = new Vector3(0, 0, 0);
 
         this.character = new Texture("images/character/character_default.png");
+
+        //La hitbox du personnage
+        hitbox = new Rectangle(x, y, character.getWidth(), character.getHeight());
     }
 
     /**
@@ -24,17 +36,36 @@ public class Character {
      * @param dt
      */
     public void update(float dt) {
+        //Si la position en y du personnage est supérieur à celle initiale
+        if(position.y > y_initial) {
+            //le personnage subit de la gravité
+            velocity.add(0, GRAVITY, 0);
+        }
+
+        //Vitesse multiplié par delta time
         velocity.scl(dt);
 
         //On bouge l'oiseau en conséquence
         position.add(100 * dt, velocity.y, position.z);
+
+        //On empêche le personnage d'aller en dessous de sa position initiale
+        if(position.y < y_initial) {
+            position.y = y_initial;
+        }
+
+        //On inverse ce qu'on a multiplié précédemment
+        velocity.scl(1/dt);
+
+        //On positionne la hitbox aux coordonnées du personnage
+        hitbox.setPosition(position.x, position.y);
     }
 
     /**
      * Fait sauter le personnage
      */
     public void jump() {
-        velocity.y = 250;
+        if (position.y == y_initial)
+            velocity.y = 350;
     }
 
     /**
@@ -76,6 +107,13 @@ public class Character {
         return this.character;
     }
 
+    /**
+     * Retourne la hitbox du personnage
+     * @return
+     */
+    public Rectangle getHitBox() {
+        return this.hitbox;
+    }
 
     /**
      * Libère la mémoire
