@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Character {
     //Represente la chute du personnage
-    private static final int GRAVITY = -15;
+    private static final int GRAVITY = -10;
 
     private int y_initial;
 
@@ -65,7 +65,7 @@ public class Character {
      */
     public void jump() {
         if (position.y == y_initial)
-            velocity.y = 350;
+            velocity.y = 310;
     }
 
     /**
