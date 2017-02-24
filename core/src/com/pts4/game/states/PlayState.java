@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.PTS4;
 import com.pts4.game.sprites.Character;
+import com.pts4.game.sprites.obstacles.Bats;
 import com.pts4.game.sprites.obstacles.TrafficLight;
 
 /**
@@ -23,7 +24,9 @@ public class PlayState extends State {
     private Texture train, train_front;
     private Character character;
 
-    private TrafficLight Tlight;
+    //Obstacles
+    private TrafficLight tLight;
+    private Bats bats;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -43,7 +46,8 @@ public class PlayState extends State {
         this.character = new Character(50 , this.train.getHeight());
 
         //Création d'un obstacle
-        this.Tlight = new TrafficLight(500,0,1);
+        this.tLight = new TrafficLight(500,0,1);
+        this.bats = new Bats(750, train.getHeight(), 1);
     }
 
     @Override
@@ -90,7 +94,8 @@ public class PlayState extends State {
         sb.draw(character.getTexture(), character.getPosition().x, character.getPosition().y);
 
         //Dessin d'un obstacle
-        sb.draw(Tlight.img(),Tlight.posObstacle().x,Tlight.posObstacle().y);
+        sb.draw(tLight.img(),tLight.posObstacle().x,tLight.posObstacle().y);
+        sb.draw(bats.img(),bats.posObstacle().x,bats.posObstacle().y);
 
         sb.end();
     }
@@ -100,6 +105,8 @@ public class PlayState extends State {
         this.train.dispose();
         this.train_front.dispose();
         this.character.dispose();
+        this.tLight.dispose();
+        this.bats.dispose();
     }
 
     @Override

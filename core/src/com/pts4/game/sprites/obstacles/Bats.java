@@ -5,11 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Created by PC on 23/02/2017.
+ * Created by Le Goff Maël on 24/02/2017.
  */
 
-public class TrafficLight extends Obstacle {
-
+public class Bats extends Obstacle {
 
     /**
      * Constructeur
@@ -17,17 +16,10 @@ public class TrafficLight extends Obstacle {
      * @param y
      * @param z
      */
-    public TrafficLight(int x, int y, int z) {
+    public Bats(int x, int y, int z) {
         super(x, y, z);
-        if(z == 1){
-            img = new Texture("images/obstacles/feuVert.png");
-        }
-        if(z == 2){
-            img = new Texture("images/obstacles/feuOrange.png");
-        }
-        if(z == 3){
-            img = new Texture("images/obstacles/feuRouge.png");
-        }
+
+        img = new Texture("images/obstacles/bat.png");
 
         //La hitbox de l'obstacle
         hitbox = new Rectangle(x, y, img.getWidth(), img.getHeight());
@@ -35,7 +27,7 @@ public class TrafficLight extends Obstacle {
 
     /**
      *
-     * @return la texture de l'image
+     * @return texture image
      */
     @Override
     public Texture img() {
@@ -44,7 +36,7 @@ public class TrafficLight extends Obstacle {
 
     /**
      *
-     * @return position de l'obstacle
+     * @return position obstacle
      */
     @Override
     public Vector3 posObstacle() {
@@ -57,7 +49,7 @@ public class TrafficLight extends Obstacle {
      */
     @Override
     public Rectangle getHitbox() {
-        return this.getHitbox();
+        return this.hitbox;
     }
 
     /**
@@ -67,6 +59,4 @@ public class TrafficLight extends Obstacle {
     public void dispose() {
         this.img.dispose();
     }
-
-
 }

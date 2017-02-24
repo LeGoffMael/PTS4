@@ -1,6 +1,7 @@
 package com.pts4.game.sprites.obstacles;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.Random;
@@ -13,6 +14,7 @@ public abstract class Obstacle {
     protected Texture img;
     protected Vector3 posObstacle;
     protected Random rand;
+    protected Rectangle hitbox;
 
     /**
      * Constructeur
@@ -37,4 +39,15 @@ public abstract class Obstacle {
      * @return
      */
     public abstract Vector3 posObstacle();
+
+    /**
+     * Méthode abstraite return hitbox
+     * @return
+     */
+    public abstract Rectangle getHitbox();
+
+    /**
+     * Méthode abstraite qui vide la mémoire de l'objet
+     */
+    public abstract void dispose();
 }
