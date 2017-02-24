@@ -1,4 +1,4 @@
-package com.pts4.game.sprites;
+package com.pts4.game.sprites.obstacles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;

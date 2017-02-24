@@ -9,8 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.PTS4;
 import com.pts4.game.sprites.Character;
-import com.pts4.game.sprites.Obstacle;
-import com.pts4.game.sprites.TrafficLight;
+import com.pts4.game.sprites.obstacles.TrafficLight;
 
 /**
  * Created by Le Goff Maël on 22/02/2017.
