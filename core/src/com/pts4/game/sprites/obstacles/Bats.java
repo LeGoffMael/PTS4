@@ -1,14 +1,17 @@
 package com.pts4.game.sprites.obstacles;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.pts4.game.sprites.Animation;
 
 /**
  * Created by Le Goff Maël on 24/02/2017.
  */
 
 public class Bats extends Obstacle {
+    private Animation batsAnimation;
 
     /**
      * Constructeur
@@ -19,11 +22,20 @@ public class Bats extends Obstacle {
     public Bats(int x, int y, int z) {
         super(x, y, z);
 
-        img = new Texture("images/obstacles/bat.png");
+        img = new Texture("images/obstacles/bats.png");
+
+        //L'animation est composée de 3 images et la durée entre chaque est de 0,5 seconde
+        batsAnimation = new Animation(new TextureRegion(img), 4, 0.5f);
 
         //La hitbox de l'obstacle
-        hitbox = new Rectangle(x, y, img.getWidth(), img.getHeight());
+        hitbox = new Rectangle(x, y, img.getWidth() / 4, img.getHeight());
     }
+
+    public void update(float dt) {
+        //On met à jour l'animation
+        batsAnimation.update(dt);
+    }
+
 
     /**
      *
@@ -31,7 +43,15 @@ public class Bats extends Obstacle {
      */
     @Override
     public Texture img() {
-        return this.img;
+        return null;
+    }
+
+    /**
+     * Retourne la texture courante
+     * @return
+     */
+    public TextureRegion getTexture() {
+        return batsAnimation.getFrame();
     }
 
     /**

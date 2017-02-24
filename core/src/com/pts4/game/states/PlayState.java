@@ -65,6 +65,9 @@ public class PlayState extends State {
         updateBackground();
         character.update(dt);
 
+        //On update l'animation des bats
+        bats.update(dt);
+
         //On déplace la camera
         camera.position.x =  camera.position.x + 100 * dt;
 
@@ -95,7 +98,7 @@ public class PlayState extends State {
 
         //Dessin d'un obstacle
         sb.draw(tLight.img(),tLight.posObstacle().x,tLight.posObstacle().y);
-        sb.draw(bats.img(),bats.posObstacle().x,bats.posObstacle().y);
+        sb.draw(bats.getTexture(),bats.posObstacle().x,bats.posObstacle().y);
 
         sb.end();
     }
