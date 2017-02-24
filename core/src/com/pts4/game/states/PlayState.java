@@ -68,6 +68,10 @@ public class PlayState extends State {
         //On update l'animation des bats
         bats.update(dt);
 
+        //Si on touche l'obstacle et qu'on est sur le même axe z
+        if (tLight.samePlan(character.getPosition()) && tLight.collides(character.getHitBox()))
+            gsm.set(new PlayState(gsm));
+
         //On déplace la camera
         camera.position.x =  camera.position.x + 100 * dt;
 
@@ -97,8 +101,8 @@ public class PlayState extends State {
         sb.draw(character.getTexture(), character.getPosition().x, character.getPosition().y);
 
         //Dessin d'un obstacle
-        sb.draw(tLight.img(),tLight.posObstacle().x,tLight.posObstacle().y);
-        sb.draw(bats.getTexture(),bats.posObstacle().x,bats.posObstacle().y);
+        sb.draw(tLight.getTexture(),tLight.getPosition().x,tLight.getPosition().y);
+        sb.draw(bats.getTextureOfRegion(),bats.getPosition().x,bats.getPosition().y);
 
         sb.end();
     }

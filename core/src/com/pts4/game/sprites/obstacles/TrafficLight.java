@@ -34,33 +34,6 @@ public class TrafficLight extends Obstacle {
     }
 
     /**
-     *
-     * @return la texture de l'image
-     */
-    @Override
-    public Texture img() {
-        return this.img;
-    }
-
-    /**
-     *
-     * @return position de l'obstacle
-     */
-    @Override
-    public Vector3 posObstacle() {
-        return this.posObstacle;
-    }
-
-    /**
-     *
-     * @return hitbox
-     */
-    @Override
-    public Rectangle getHitbox() {
-        return this.getHitbox();
-    }
-
-    /**
      * Vide la mémoire
      */
     @Override

@@ -46,7 +46,7 @@ public class Character {
         velocity.scl(dt);
 
         //On bouge l'oiseau en conséquence
-        position.add(100 * dt, velocity.y, position.z);
+        position.add(100 * dt, velocity.y, 0);
 
         //On empêche le personnage d'aller en dessous de sa position initiale
         if(position.y < y_initial) {

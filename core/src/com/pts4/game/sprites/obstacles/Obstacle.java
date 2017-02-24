@@ -29,25 +29,53 @@ public abstract class Obstacle {
     }
 
     /**
-     * Méthode abstraite return img
-     * @return
-     */
-    public abstract Texture img();
-
-    /**
-     * Méthode abstraite return posObstacle
-     * @return
-     */
-    public abstract Vector3 posObstacle();
-
-    /**
-     * Méthode abstraite return hitbox
-     * @return
-     */
-    public abstract Rectangle getHitbox();
-
-    /**
      * Méthode abstraite qui vide la mémoire de l'objet
      */
     public abstract void dispose();
+
+
+    /**
+     * Retourne l'image représentant l'obstacle
+     * @return
+     */
+    public Texture getTexture() {
+        return this.img;
+    }
+
+    /**
+     * Retourne la position de l'obstacle
+     * @return
+     */
+    public Vector3 getPosition() {
+        return this.posObstacle;
+    }
+
+    /**
+     * Retourne la hit box de l'obstacle
+     * @return
+     */
+    public Rectangle getHitbox() {
+        return this.hitbox;
+    }
+
+    /**
+     * Retourne vrai si le rectangle passé en paramétre touche la hitbox de l'obstacle
+     * @param player hitbox du character
+     * @return
+     */
+    public boolean collides(Rectangle player) {
+        return player.overlaps(hitbox);
+    }
+
+    /**
+     * Retourne vrai si vector passé en paramètre est égale sur l'axe z à celui de l'obstacle
+     * @param pos
+     * @return
+     */
+    public boolean samePlan(Vector3 pos) {
+        boolean res=false;
+        if (pos.z == this.posObstacle.z)
+            res=true;
+        return res;
+    }
 }

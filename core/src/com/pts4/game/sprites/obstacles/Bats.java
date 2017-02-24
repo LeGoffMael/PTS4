@@ -38,39 +38,13 @@ public class Bats extends Obstacle {
 
 
     /**
-     *
-     * @return texture image
-     */
-    @Override
-    public Texture img() {
-        return null;
-    }
-
-    /**
      * Retourne la texture courante
      * @return
      */
-    public TextureRegion getTexture() {
+    public TextureRegion getTextureOfRegion() {
         return batsAnimation.getFrame();
     }
 
-    /**
-     *
-     * @return position obstacle
-     */
-    @Override
-    public Vector3 posObstacle() {
-        return this.posObstacle;
-    }
-
-    /**
-     *
-     * @return hitbox
-     */
-    @Override
-    public Rectangle getHitbox() {
-        return this.hitbox;
-    }
 
     /**
      * Vide la mémoire
