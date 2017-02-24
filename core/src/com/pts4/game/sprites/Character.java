@@ -14,7 +14,7 @@ public class Character {
 
     private int y_initial;
 
-    private Vector3 position; //De profondeur z de 0 (1er plan) à 2 (dernier plan)
+    private Vector3 position; //De profondeur z de 1 (1er plan) à 3 (dernier plan)
     private Vector3 velocity;
     private Texture character;
 
@@ -22,7 +22,7 @@ public class Character {
 
     public Character(int x, int y) {
         this.y_initial = y;
-        this.position = new Vector3(x, y, 1);
+        this.position = new Vector3(x, y, 2);
         this.velocity = new Vector3(0, 0, 0);
 
         this.character = new Texture("images/character/character_default.png");
@@ -81,12 +81,12 @@ public class Character {
     public void changePlan(boolean avant) {
         if (avant==false) {
             //Si il n'est pas a la derniere position on le recule
-            if (position.z < 2)
+            if (position.z < 3)
                 position.z += 1;
         }
         else {
             //Si il n'est pas a la premiere position on l'avance
-            if (position.z > 0)
+            if (position.z > 1)
                 position.z -= 1;
         }
     }
