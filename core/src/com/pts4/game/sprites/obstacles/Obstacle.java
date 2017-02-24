@@ -23,9 +23,19 @@ public abstract class Obstacle {
      * @param z
      */
     public Obstacle(int x, int y, int z){
+        int new_z;
         rand = new Random();
 
-        posObstacle = new Vector3(x,y,z);
+        //On gère que la position ne dépasse pas [1;3]
+        if(z > 3)
+            new_z = 3;
+        else if(z < 1)
+            new_z = 1;
+        else
+            new_z = z;
+
+
+        posObstacle = new Vector3(x,y,new_z);
     }
 
     /**
