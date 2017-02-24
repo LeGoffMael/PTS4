@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
  */
 
 public class Animation {
-    //Contient les images des animations complète
+    //Contient les images des animations complètes
     private Array<TextureRegion> frames;
     //La durée de visualisation de l'image avant de passer à l'autre
     private float maxFrameTime;
