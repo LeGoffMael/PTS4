@@ -46,7 +46,7 @@ public class PlayState extends State {
         this.character = new Character(50 , this.train.getHeight());
 
         //Création d'un obstacle
-        this.tLight = new TrafficLight(500,0,1);
+        this.tLight = new TrafficLight(500,0,2);
         this.bats = new Bats(750, train.getHeight(), 1);
     }
 
@@ -70,6 +70,8 @@ public class PlayState extends State {
 
         //Si on touche l'obstacle et qu'on est sur le même axe z
         if (tLight.samePlan(character.getPosition()) && tLight.collides(character.getHitBox()))
+            gsm.set(new PlayState(gsm));
+        if (bats.samePlan(character.getPosition()) && bats.collides(character.getHitBox()))
             gsm.set(new PlayState(gsm));
 
         //On déplace la camera

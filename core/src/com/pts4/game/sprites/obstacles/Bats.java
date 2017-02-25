@@ -28,7 +28,7 @@ public class Bats extends Obstacle {
         batsAnimation = new Animation(new TextureRegion(img), 4, 0.5f);
 
         //La hitbox de l'obstacle
-        hitbox = new Rectangle(x, y, img.getWidth() / 4, img.getHeight());
+        hitbox = new Rectangle(x, y, img.getWidth() / 4 - 5, img.getHeight() - 5);
     }
 
     public void update(float dt) {

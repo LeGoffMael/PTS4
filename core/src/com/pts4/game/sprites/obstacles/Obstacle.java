@@ -34,7 +34,6 @@ public abstract class Obstacle {
         else
             new_z = z;
 
-
         posObstacle = new Vector3(x,y,new_z);
     }
 
