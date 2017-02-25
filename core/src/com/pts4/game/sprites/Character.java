@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Character {
     //Represente la chute du personnage
     private static final int GRAVITY = -10;
-
+    //Represente la position y initiale
     private int y_initial;
 
     private Vector3 position; //De profondeur z de 1 (1er plan) à 3 (dernier plan)

@@ -13,7 +13,6 @@ import java.util.Random;
 public abstract class Obstacle {
     protected Texture img;
     protected Vector3 posObstacle;
-    protected Random rand;
     protected Rectangle hitbox;
 
     /**
@@ -24,7 +23,6 @@ public abstract class Obstacle {
      */
     public Obstacle(int x, int y, int z){
         int new_z;
-        rand = new Random();
 
         //On gère que la position ne dépasse pas [1;3]
         if(z > 3)
