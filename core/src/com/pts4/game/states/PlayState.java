@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
-import com.pts4.game.sprites.Character;
-import com.pts4.game.sprites.obstacles.Bats;
-import com.pts4.game.sprites.obstacles.TrafficLight;
 
 /**
  * Created by Le Goff Maël on 22/02/2017.
@@ -21,12 +19,10 @@ public class PlayState extends State {
     private Texture background_ground;
     private Vector2 groundPos1, groundPos2;
 
-    private Texture train, train_front;
-    private Character character;
+    private LevelManager level;
 
-    //Obstacles
-    private TrafficLight tLight;
-    private Bats bats;
+    //Represente le temps passé dans le niveau
+    private float timeCount;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -41,13 +37,9 @@ public class PlayState extends State {
         //On détermine la seconde position par rapport à la première
         groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + background_ground.getWidth() / 4, 0);
 
-        this.train = new Texture("images/trains/train.png");
-        this.train_front = new Texture("images/trains/train_front.png");
-        this.character = new Character(50 , this.train.getHeight());
+        level = new LevelManager(this.getCamera());
 
-        //Création d'un obstacle
-        this.tLight = new TrafficLight(500,0,2);
-        this.bats = new Bats(750, train.getHeight(), 1);
+        this.timeCount = 0;
     }
 
     @Override
@@ -55,24 +47,20 @@ public class PlayState extends State {
         //Si l'écran touché
         if(Gdx.input.justTouched()) {
             //on fait sauter le personnage
-            character.jump();
+            level.getPlayer().jump();
         }
     }
 
     @Override
     public void update(float dt) {
+        this.timeCount += dt;
+
         handleInput();
         updateBackground();
-        character.update(dt);
 
-        //On update l'animation des bats
-        bats.update(dt);
-
-        //Si on touche l'obstacle et qu'on est sur le même axe z
-        if (tLight.samePlan(character.getPosition()) && tLight.collides(character.getHitBox()))
-            gsm.set(new PlayState(gsm));
-        if (bats.samePlan(character.getPosition()) && bats.collides(character.getHitBox()))
-            gsm.set(new PlayState(gsm));
+        //Mise à jour du niveau
+        level.setCamera(camera);
+        level.update(dt, this.timeCount);
 
         //On déplace la camera
         camera.position.x =  camera.position.x + 100 * dt;
@@ -95,32 +83,19 @@ public class PlayState extends State {
         //On place le ciel au dessus du sol
         sb.draw(background_sky, camera.position.x - PTS4.WIDTH / 4, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4, PTS4.WIDTH / 2, background_sky.getHeight() / 4);
 
-        //On place les wagons
-        sb.draw(train, camera.position.x - train.getWidth(), 0);
-        sb.draw(train_front, camera.position.x, 0);
-
-        //On place le personnage
-        sb.draw(character.getTexture(), character.getPosition().x, character.getPosition().y);
-
-        //Dessin d'un obstacle
-        sb.draw(tLight.getTexture(),tLight.getPosition().x,tLight.getPosition().y);
-        sb.draw(bats.getTextureOfRegion(),bats.getPosition().x,bats.getPosition().y);
+        level.render(sb);
 
         sb.end();
     }
 
     @Override
     public void dispose() {
-        this.train.dispose();
-        this.train_front.dispose();
-        this.character.dispose();
-        this.tLight.dispose();
-        this.bats.dispose();
+        level.dispose();
     }
 
     @Override
     public OrthographicCamera getCamera() {
-        return null;
+        return this.camera;
     }
 
     @Override
