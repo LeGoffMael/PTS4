@@ -35,7 +35,7 @@ public class PlayState extends State {
         //On détermine la premiere position
         groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);
         //On détermine la seconde position par rapport à la première
-        groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + background_ground.getWidth() / 4, 0);
+        groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + PTS4.WIDTH / 2, 0);
 
         level = new LevelManager(this.getCamera());
 
@@ -108,16 +108,14 @@ public class PlayState extends State {
      */
     private void updateBackground() {
         //si la position x de la caméra et supérieur à la première position du sol plus sa largeur
-        if(camera.position.x - (camera.viewportWidth / 2) > groundPos1.x + background_ground.getWidth() / 4) {
+        if(camera.position.x - (camera.viewportWidth / 2) > groundPos1.x + PTS4.WIDTH / 2) {
             //on ajoute une position à 2 fois sa largeur
-            groundPos1.add(background_ground.getWidth() / 2, 0);
-            System.out.println("> 1");
+            groundPos1.add(PTS4.WIDTH, 0);
         }
         //si la position x de la caméra et supérieur à la seconde position du sol plus sa largeur
-        if(camera.position.x - (camera.viewportWidth / 2) > groundPos2.x + background_ground.getWidth() / 4) {
+        if(camera.position.x - (camera.viewportWidth / 2) > groundPos2.x + PTS4.WIDTH / 2) {
             //on ajoute une position à 2 fois sa largeur
-            groundPos2.add(background_ground.getWidth() / 2, 0);
-            System.out.println("> 2");
+            groundPos2.add(PTS4.WIDTH, 0);
         }
     }
 }

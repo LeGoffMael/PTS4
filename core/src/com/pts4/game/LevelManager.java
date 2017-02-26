@@ -118,7 +118,6 @@ public class LevelManager {
 
                 //On met des bats
                 if(other_obstacle == 1) {
-                    System.out.println("bats +++++");
                     Bats other_bats = new Bats(other_x, this.train.getHeight(), other_z);
                     //On crée de nouvelles bats
                     this.batsArray.add(other_bats);
