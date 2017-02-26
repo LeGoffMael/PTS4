@@ -56,8 +56,27 @@ public class LevelManager {
      * @param dt
      */
     public void update(float dt, float time) {
+        //On met à jour le personnage
         this.character.update(dt);
 
+        //On ajoute les obstacles
+        addObstacles(time);
+
+        //On parcourt le tableau de bats
+        for (int i = 0; i < this.batsArray.size; i++) {
+            //On met à jour l'animation
+            this.batsArray.get(i).update(dt);
+        }
+
+        //On supprime les obstacles qui sont hors champ
+        clearUseless(this.camera, this.batsArray, this.tLightsArray);
+    }
+
+    /**
+     * Fonction qui place des obstacles aléatoirement
+     * @param time
+     */
+    public void addObstacles(float time) {
         //Si la camera a dépassé le premier obstacle
         if(this.x_last < this.camera.position.x)
         {
@@ -133,15 +152,6 @@ public class LevelManager {
                 }
             }
         }
-
-        //On parcourt le tableau de bats
-        for (int i = 0; i < this.batsArray.size; i++) {
-            //On met à jour l'animation
-            this.batsArray.get(i).update(dt);
-        }
-
-        //On supprime les obstacles qui sont hors champ
-        clearUseless(this.camera, this.batsArray, this.tLightsArray);
     }
 
     /**
@@ -197,14 +207,19 @@ public class LevelManager {
         //On parcourt le tableau de bats
         for (int i = 0; i < tab_bats.size; i++) {
             //Si les bats sont hors de l'écran
-            if(cam.position.x - (cam.viewportWidth / 2) > tab_bats.get(i).getPosition().x + tab_bats.get(i).getTexture().getWidth())
+            if(cam.position.x - (cam.viewportWidth / 2) > tab_bats.get(i).getPosition().x + tab_bats.get(i).getTextureOfRegion().getRegionWidth()) {
                 tab_bats.get(i).dispose();
+                tab_bats.removeIndex(i);
+            }
+
         }
         //On parcourt le tableau de feux tricolores
         for (int i = 0; i < tab_tLights.size; i++) {
             //Si le feu est hors de l'écran
-            if(cam.position.x - (cam.viewportWidth / 2) > tab_tLights.get(i).getPosition().x + tab_tLights.get(i).getTexture().getWidth())
+            if(cam.position.x - (cam.viewportWidth / 2) > tab_tLights.get(i).getPosition().x + tab_tLights.get(i).getTexture().getWidth()) {
                 tab_tLights.get(i).dispose();
+                tab_tLights.removeIndex(i);
+            }
         }
     }
 

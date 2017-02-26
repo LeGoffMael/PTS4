@@ -43,7 +43,9 @@ public class Bats extends Obstacle {
         //Multiplié par delta time
         velocity.scl(dt/10);
 
-        this.getPosition().add(velocity.x, 0, 0);
+        //On bouge la position des bats et de leur hitbox
+        this.posObstacle.add(velocity.x, 0, 0);
+        this.hitbox.setPosition(this.posObstacle.x, this.posObstacle.y);
 
         //On inverse ce qu'on a multiplié précédemment
         velocity.scl(1/(dt/10));

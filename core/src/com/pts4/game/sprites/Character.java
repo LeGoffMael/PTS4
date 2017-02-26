@@ -76,15 +76,15 @@ public class Character {
 
     /**
      * Change la position en profondeur du personnage
-     * @param avant à true si vers l'avant à false si vers l'arriere
+     * @param index
      */
-    public void changePlan(boolean avant) {
-        if (avant==false) {
+    public void changePlan(int index) {
+        if (index==0) {
             //Si il n'est pas a la derniere position on le recule
             if (position.z < 3)
                 position.z += 1;
         }
-        else {
+        else if (index==1){
             //Si il n'est pas a la premiere position on l'avance
             if (position.z > 1)
                 position.z -= 1;
