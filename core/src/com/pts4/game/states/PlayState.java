@@ -17,10 +17,6 @@ import com.pts4.game.SimpleDirectionGestureDetector;
  */
 
 public class PlayState extends State {
-    private Texture background_sky;
-    private Texture background_ground;
-    private Vector2 groundPos1, groundPos2;
-
     private LevelManager level;
 
     //Represente le temps passé dans le niveau
@@ -36,13 +32,6 @@ public class PlayState extends State {
 
         //On "zoom" la caméra à la moitié de la largeur et la moitié de la longueur (permet de ne pas voir toutes la map mais que la partie zoomée)
         camera.setToOrtho(false, PTS4.WIDTH / 2, PTS4.HEIGHT / 2);
-
-        background_sky = new Texture("images/backgrounds/day/daySky.png");
-        background_ground = new Texture("images/backgrounds/day/dayGround.png");
-        //On détermine la premiere position
-        groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);
-        //On détermine la seconde position par rapport à la première
-        groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + PTS4.WIDTH / 2, 0);
 
         level = new LevelManager(this.getCamera());
 
@@ -101,9 +90,6 @@ public class PlayState extends State {
 
         handleInput();
 
-        //On met à jour le background
-        updateBackground();
-
         //Mise à jour du niveau
         level.setCamera(camera);
         level.update(dt, this.timeCount);
@@ -113,7 +99,7 @@ public class PlayState extends State {
 
         //Si on a perdu on va dans l'état Game Over
         if (gameOver == true)
-            gsm.set(new PauseState(gsm, getLevel()));
+            gsm.set(new GameOverState(gsm, getLevel()));
 
         //On déplace la camera
         camera.position.x = camera.position.x + 100 * dt;
@@ -128,13 +114,6 @@ public class PlayState extends State {
         sb.setProjectionMatrix(camera.combined);
 
         sb.begin();
-
-        //On place les 2 sols
-        sb.draw(background_ground, groundPos1.x, groundPos1.y, PTS4.WIDTH / 2, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4);
-        sb.draw(background_ground, groundPos2.x, groundPos2.y, PTS4.WIDTH / 2, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4);
-
-        //On place le ciel au dessus du sol
-        sb.draw(background_sky, camera.position.x - PTS4.WIDTH / 4, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4, PTS4.WIDTH / 2, background_sky.getHeight() / 4);
 
         //On affiche les éléments composants le niveau
         level.render(sb);
@@ -175,26 +154,8 @@ public class PlayState extends State {
         }
     }
 
-    /**
-     * On replace le background pour qu'il soit visible à l'écran
-     */
-    public void updateBackground() {
-        //si la position x de la caméra et supérieur à la première position du sol plus sa largeur
-        if (camera.position.x - (camera.viewportWidth / 2) > groundPos1.x + PTS4.WIDTH / 2) {
-            //on ajoute une position à 2 fois sa largeur
-            groundPos1.add(PTS4.WIDTH, 0);
-        }
-        //si la position x de la caméra et supérieur à la seconde position du sol plus sa largeur
-        if (camera.position.x - (camera.viewportWidth / 2) > groundPos2.x + PTS4.WIDTH / 2) {
-            //on ajoute une position à 2 fois sa largeur
-            groundPos2.add(PTS4.WIDTH, 0);
-        }
-    }
-
     @Override
     public void dispose() {
-        background_sky.dispose();
-        background_ground.dispose();
     }
 
     @Override

@@ -13,10 +13,7 @@ import com.pts4.game.PTS4;
  */
 
 public class PauseState extends State {
-    private Texture playBtn;
-    private Texture menuBtn;
     private LevelManager level;
-
     private Texture background_sky,  background_ground;
 
     public PauseState(GameStateManager gsm, LevelManager lm) {
@@ -27,8 +24,7 @@ public class PauseState extends State {
 
         this.background_sky = new Texture("images/backgrounds/day/daySky.png");
         this.background_ground = new Texture("images/backgrounds/day/dayGround.png");
-        this.playBtn = new Texture("images/playBtn.png");
-        this.menuBtn = new Texture("images/menuBtn.png");
+
         this.level = lm;
         this.camera = this.level.getCamera();
     }
@@ -62,9 +58,6 @@ public class PauseState extends State {
         //On affiche les éléments composants le niveau
         this.level.render(sb);
 
-        //sb.draw(playBtn, camera.position.x - playBtn.getWidth() / 2,  PTS4.HEIGHT / 4 - playBtn.getHeight() / 4, playBtn.getWidth() / 2, playBtn.getHeight() / 2);
-        //sb.draw(menuBtn, camera.position.x - menuBtn.getWidth() / 4,  PTS4.HEIGHT / 4 - menuBtn.getHeight() / 4, menuBtn.getWidth() / 2, menuBtn.getHeight() / 2);
-
         sb.end();
     }
 
@@ -73,9 +66,6 @@ public class PauseState extends State {
      */
     @Override
     public void dispose() {
-        playBtn.dispose();
-        menuBtn.dispose();
-        level.dispose();
     }
 
     /**

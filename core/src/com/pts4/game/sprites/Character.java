@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 public class Character {
     //Represente la chute du personnage
     private static final int GRAVITY = -10;
-    //Represente la position y initiale
-    private int y_initial;
+    //Represente la position y minimale
+    private int y_min;
 
     private Vector3 position; //De profondeur z de 1 (1er plan) à 3 (dernier plan)
     private Vector3 velocity;
@@ -21,7 +21,7 @@ public class Character {
     private Rectangle hitbox;
 
     public Character(int x, int y) {
-        this.y_initial = y;
+        this.y_min = y;
         this.position = new Vector3(x, y, 2);
         this.velocity = new Vector3(0, 0, 0);
 
@@ -37,7 +37,7 @@ public class Character {
      */
     public void update(float dt) {
         //Si la position en y du personnage est supérieur à celle initiale
-        if(position.y > y_initial) {
+        if(position.y > y_min) {
             //le personnage subit de la gravité
             velocity.add(0, GRAVITY, 0);
         }
@@ -49,8 +49,8 @@ public class Character {
         position.add(100 * dt, velocity.y, 0);
 
         //On empêche le personnage d'aller en dessous de sa position initiale
-        if(position.y < y_initial) {
-            position.y = y_initial;
+        if(position.y < y_min) {
+            position.y = y_min;
         }
 
         //On inverse ce qu'on a multiplié précédemment
@@ -64,7 +64,7 @@ public class Character {
      * Fait sauter le personnage
      */
     public void jump() {
-        if (position.y == y_initial) {
+        if (position.y == y_min) {
             velocity.y = 310;
             this.character = new Texture("images/character/characterJump.png");
         }
@@ -91,6 +91,13 @@ public class Character {
             if (position.z > 1)
                 position.z -= 1;
         }
+    }
+
+    /**
+     * Lorsque le personnage meurt
+     */
+    public void die() {
+        this.y_min = -500;
     }
 
     /**

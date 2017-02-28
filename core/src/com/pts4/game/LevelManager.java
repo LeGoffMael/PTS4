@@ -3,6 +3,7 @@ package com.pts4.game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.sprites.Character;
 import com.pts4.game.sprites.obstacles.Bats;
@@ -19,12 +20,20 @@ public class LevelManager {
     private int x_last;
     private Random rand;
 
+    //Represente si la classe doit placer de nouveaux obsatcles
+    private boolean makeObsatcles = true;
+
     //Represente l'espace maximal entre des obstacles
     private static final int MAX_SPACE = 150;
     //Respresente l'espace minimal entre des obstacles
     private static final int MIN_SPACE = 70;
     //Respresente le nombre d'obstacle différent
     private static final int NB_OBSTACLES = 2;
+
+    //Le background
+    private Texture background_sky;
+    private Texture background_ground;
+    private Vector2 groundPos1, groundPos2;
 
     //Les trains et le joueur
     private Texture train, train_front;
@@ -42,6 +51,13 @@ public class LevelManager {
 
         this.x_last = (int)this.camera.position.x  + 1;
 
+        background_sky = new Texture("images/backgrounds/day/daySky.png");
+        background_ground = new Texture("images/backgrounds/day/dayGround.png");
+        //On détermine la premiere position
+        groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);
+        //On détermine la seconde position par rapport à la première
+        groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + PTS4.WIDTH / 2, 0);
+
         this.train = new Texture("images/trains/train.png");
         this.train_front = new Texture("images/trains/train_front.png");
         this.character = new Character(50 , this.train.getHeight());
@@ -56,11 +72,17 @@ public class LevelManager {
      * @param dt
      */
     public void update(float dt, float time) {
+        //On met à jour le background
+        updateBackground();
+
         //On met à jour le personnage
         this.character.update(dt);
 
-        //On ajoute les obstacles
-        addObstacles(time);
+        //Si on peut placer de nouveaux obstacles
+        if(makeObsatcles) {
+            //On ajoute les obstacles
+            addObstacles(time);
+        }
 
         //On parcourt le tableau de bats
         for (int i = 0; i < this.batsArray.size; i++) {
@@ -159,6 +181,13 @@ public class LevelManager {
      * @param sb
      */
     public void render(SpriteBatch sb) {
+        //On place les 2 sols
+        sb.draw(background_ground, groundPos1.x, groundPos1.y, PTS4.WIDTH / 2, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4);
+        sb.draw(background_ground, groundPos2.x, groundPos2.y, PTS4.WIDTH / 2, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4);
+
+        //On place le ciel au dessus du sol
+        sb.draw(background_sky, camera.position.x - PTS4.WIDTH / 4, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4, PTS4.WIDTH / 2, background_sky.getHeight() / 4);
+
         //On place les wagons
         sb.draw(train, camera.position.x - train.getWidth(), 0);
         sb.draw(train_front, camera.position.x, 0);
@@ -224,6 +253,22 @@ public class LevelManager {
     }
 
     /**
+     * On replace le background pour qu'il soit visible à l'écran
+     */
+    public void updateBackground() {
+        //si la position x de la caméra et supérieur à la première position du sol plus sa largeur
+        if (camera.position.x - (camera.viewportWidth / 2) > groundPos1.x + PTS4.WIDTH / 2) {
+            //on ajoute une position à 2 fois sa largeur
+            groundPos1.add(PTS4.WIDTH, 0);
+        }
+        //si la position x de la caméra et supérieur à la seconde position du sol plus sa largeur
+        if (camera.position.x - (camera.viewportWidth / 2) > groundPos2.x + PTS4.WIDTH / 2) {
+            //on ajoute une position à 2 fois sa largeur
+            groundPos2.add(PTS4.WIDTH, 0);
+        }
+    }
+
+    /**
      * Vide la mémoire
      */
     public void dispose() {
@@ -237,6 +282,8 @@ public class LevelManager {
             tLightsArray.get(i).dispose();
         }
     }
+
+    public void setMakeObsatcles (Boolean b) { this.makeObsatcles = b; }
 
     public void setCamera(OrthographicCamera cam) {
         this.camera = cam;
