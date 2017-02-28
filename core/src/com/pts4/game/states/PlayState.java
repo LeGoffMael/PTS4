@@ -113,7 +113,7 @@ public class PlayState extends State {
 
         //Si on a perdu on va dans l'état Game Over
         if (gameOver == true)
-            gsm.set(new GameOverState(gsm, getLevel()));
+            gsm.set(new PauseState(gsm, getLevel()));
 
         //On déplace la camera
         camera.position.x = camera.position.x + 100 * dt;
@@ -193,7 +193,8 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
-        level.dispose();
+        background_sky.dispose();
+        background_ground.dispose();
     }
 
     @Override

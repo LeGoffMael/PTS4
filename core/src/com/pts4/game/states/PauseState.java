@@ -12,14 +12,14 @@ import com.pts4.game.PTS4;
  * Created by Le Goff Maël on 28/02/2017.
  */
 
-public class GameOverState extends State {
+public class PauseState extends State {
     private Texture playBtn;
     private Texture menuBtn;
     private LevelManager level;
 
     private Texture background_sky,  background_ground;
 
-    public GameOverState(GameStateManager gsm, LevelManager lm) {
+    public PauseState(GameStateManager gsm, LevelManager lm) {
         super(gsm);
 
         //On "zoom" la caméra à la moitié de la largeur et la moitié de la longueur (permet de ne pas voir toutes la map mais que la partie zoomée)
