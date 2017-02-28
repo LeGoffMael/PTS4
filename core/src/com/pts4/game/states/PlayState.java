@@ -11,7 +11,6 @@ import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
 import com.pts4.game.Score;
 import com.pts4.game.SimpleDirectionGestureDetector;
-import com.sun.org.apache.xpath.internal.SourceTree;
 
 /**
  * Created by Le Goff Maël on 22/02/2017.
@@ -112,6 +111,10 @@ public class PlayState extends State {
         //On vérifie si le personnage est rentré en contact avec un obstacle
         checkCollides(this.level);
 
+        //Si on a perdu on va dans l'état Game Over
+        if (gameOver == true)
+            gsm.set(new GameOverState(gsm, getLevel()));
+
         //On déplace la camera
         camera.position.x = camera.position.x + 100 * dt;
 
@@ -201,4 +204,5 @@ public class PlayState extends State {
     @Override
     public Array<Rectangle> getButtonsPosition() {return null;}
 
+    public LevelManager getLevel() {return this.level; }
 }

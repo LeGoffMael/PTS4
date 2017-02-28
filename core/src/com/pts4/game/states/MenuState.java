@@ -33,7 +33,7 @@ public class MenuState extends State {
         //On détermine la seconde position par rapport à la première
         groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + PTS4.WIDTH / 2, 0);
 
-        playBtn = new Texture("images/playbtn.png");
+        playBtn = new Texture("images/playBtn.png");
     }
 
     @Override

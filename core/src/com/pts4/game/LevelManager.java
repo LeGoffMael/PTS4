@@ -242,6 +242,9 @@ public class LevelManager {
         this.camera = cam;
     }
 
+    public OrthographicCamera getCamera() {
+        return this.camera; }
+
     public Character getPlayer () {
         return this.character;
     }
