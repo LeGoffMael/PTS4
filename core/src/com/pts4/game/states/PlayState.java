@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
+import com.pts4.game.Score;
 import com.pts4.game.SimpleDirectionGestureDetector;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
@@ -25,6 +26,8 @@ public class PlayState extends State {
 
     //Represente le temps passé dans le niveau
     private float timeCount;
+    //Represente le score
+    private Score scorePlayer = new Score();
 
     //Represente si le joueur à perdu
     private boolean gameOver = false;
@@ -93,6 +96,10 @@ public class PlayState extends State {
     public void update(float dt) {
         this.timeCount += dt;
 
+        //Score player
+        this.scorePlayer.setScorePlayer(dt);
+        System.out.println(this.scorePlayer.getScorePlayer());
+
         handleInput();
 
         //On met à jour le background
@@ -158,8 +165,10 @@ public class PlayState extends State {
                     }
                 }
             }
-            if(gameOver)
+            if(gameOver){
                 System.out.println("game over");
+                //this.scorePlayer.saveScoreMax();
+            }
         }
     }
 
@@ -190,8 +199,6 @@ public class PlayState extends State {
     }
 
     @Override
-    public Array<Rectangle> getButtonsPosition() {
-        return null;
-    }
+    public Array<Rectangle> getButtonsPosition() {return null;}
 
 }

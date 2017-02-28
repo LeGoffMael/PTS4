@@ -45,7 +45,7 @@ public class Character {
         //Vitesse multiplié par delta time
         velocity.scl(dt);
 
-        //On bouge l'oiseau en conséquence
+        //On bouge le personnage en conséquence
         position.add(100 * dt, velocity.y, 0);
 
         //On empêche le personnage d'aller en dessous de sa position initiale
@@ -64,8 +64,10 @@ public class Character {
      * Fait sauter le personnage
      */
     public void jump() {
-        if (position.y == y_initial)
+        if (position.y == y_initial) {
             velocity.y = 310;
+            this.character = new Texture("images/character/characterJump.png");
+        }
     }
 
     /**
@@ -90,6 +92,16 @@ public class Character {
                 position.z -= 1;
         }
     }
+
+    /**
+     * Setter du sprite du character
+     * Je pensais en avoir besoin mais en fait non
+     * @param chemin
+     */
+    public void setSprite(String chemin){
+        this.character = new Texture("chemin");
+    }
+
 
     /**
      * Retourne la position du personnage
