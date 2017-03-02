@@ -272,6 +272,8 @@ public class LevelManager {
      * Vide la mémoire
      */
     public void dispose() {
+        this.background_sky.dispose();
+        this.background_ground.dispose();
         this.train.dispose();
         this.train_front.dispose();
         this.character.dispose();

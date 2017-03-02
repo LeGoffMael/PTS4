@@ -1,11 +1,18 @@
 package com.pts4.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
 
@@ -15,7 +22,9 @@ import com.pts4.game.PTS4;
 
 public class PauseState extends State {
     private LevelManager level;
-    private Texture background_sky,  background_ground;
+    private Texture pausePlayButton, musicSetting, effectsSetting;
+
+    public static BitmapFont font, shadow;
 
     public PauseState(GameStateManager gsm, LevelManager lm) {
         super(gsm);
@@ -23,21 +32,46 @@ public class PauseState extends State {
         //On "zoom" la caméra à la moitié de la largeur et la moitié de la longueur (permet de ne pas voir toutes la map mais que la partie zoomée)
         camera.setToOrtho(false, PTS4.WIDTH / 2, PTS4.HEIGHT / 2);
 
-        this.background_sky = new Texture("images/backgrounds/day/daySky.png");
-        this.background_ground = new Texture("images/backgrounds/day/dayGround.png");
-
         this.level = lm;
         this.camera = this.level.getCamera();
+
+        this.pausePlayButton = new Texture("images/buttons/pausePlayBtn.png");
+        this.musicSetting = new Texture("images/buttons/soundBtn.png");
+        this.effectsSetting = new Texture("images/buttons/soundBtn.png");
+
+        //La police
+        font = new BitmapFont(Gdx.files.internal("fonts/text.fnt"));
+        font.getData().setScale(.20f, .20f);
+        shadow = new BitmapFont(Gdx.files.internal("fonts/shadow.fnt"));
+        shadow.getData().setScale(.20f, .20f);
     }
 
     @Override
     public void handleInput() {
+        //Représente les coordonnées du bouton
+        Rectangle bounds_play = new Rectangle(this.getButtonsPosition().first());
+        Rectangle bounds_music = new Rectangle(this.getButtonsPosition().get(1));
+        Rectangle bounds_effects = new Rectangle(this.getButtonsPosition().get(2));
+        Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(tmp);
+
         //Si l'écran est touché
         if(Gdx.input.justTouched()) {
-            PlayState playState = new PlayState(gsm);
-            //On remet le niveau
-            playState.setLevel(this.level);
-            gsm.set(playState);
+            //Au coordonnées du bouton play
+            if (bounds_play.contains(tmp.x, tmp.y)) {
+                PlayState playState = new PlayState(gsm);
+                //On remet le niveau
+                playState.setLevel(this.level);
+                gsm.set(playState);
+            }
+            //Au coordonnées du bouton music
+            if (bounds_music.contains(tmp.x, tmp.y)) {
+                //TODO
+            }
+            //Au coordonnées du bouton effets
+            if (bounds_effects.contains(tmp.x, tmp.y)) {
+                //TODO
+            }
         }
     }
 
@@ -59,11 +93,23 @@ public class PauseState extends State {
 
         sb.begin();
 
-        sb.draw(background_ground, camera.position.x - camera.viewportWidth / 2, 0, PTS4.WIDTH / 2, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4);
-        sb.draw(background_sky, camera.position.x - PTS4.WIDTH / 4, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4, PTS4.WIDTH / 2, background_sky.getHeight() / 4);
-
         //On affiche les éléments composants le niveau
         this.level.render(sb);
+
+        //On place le bouton de pause
+        sb.draw(pausePlayButton, camera.position.x - pausePlayButton.getWidth() / 2,   PTS4.HEIGHT / 4 - pausePlayButton.getHeight());
+
+        //On place le texte musique
+        shadow.draw(sb, "MUSIQUE", camera.position.x - musicSetting.getWidth() * 2 - (font.getSpaceWidth() * font.toString().length()) / 2,  PTS4.HEIGHT / 3 + musicSetting.getHeight() / 2);
+        font.draw(sb, "MUSIQUE", camera.position.x - musicSetting.getWidth() * 2 - (font.getSpaceWidth() * font.toString().length()) / 2,  PTS4.HEIGHT / 3 + musicSetting.getHeight() / 2);
+        //On place le bouton de gestion des musiques
+        sb.draw(musicSetting, camera.position.x - musicSetting.getWidth() * 2,  PTS4.HEIGHT / 4 + musicSetting.getHeight() / 2);
+
+        //On place le texte effets
+        shadow.draw(sb, "EFFETS", camera.position.x + effectsSetting.getWidth() - (font.getSpaceWidth() * font.toString().length()) / 2,  PTS4.HEIGHT / 3 + effectsSetting.getHeight() / 2);
+        font.draw(sb, "EFFETS", camera.position.x + effectsSetting.getWidth() - (font.getSpaceWidth() * font.toString().length()) / 2,  PTS4.HEIGHT / 3 + effectsSetting.getHeight() / 2);
+        //On place le bouton de gestion des effets
+        sb.draw(effectsSetting, camera.position.x + effectsSetting.getWidth(),  PTS4.HEIGHT / 4 + effectsSetting.getHeight() / 2);
 
         sb.end();
     }
@@ -73,6 +119,9 @@ public class PauseState extends State {
      */
     @Override
     public void dispose() {
+        pausePlayButton.dispose();
+        musicSetting.dispose();
+        effectsSetting.dispose();
     }
 
     /**
@@ -92,6 +141,13 @@ public class PauseState extends State {
      */
     @Override
     public Array<Rectangle> getButtonsPosition() {
-        return null;
+        Array<Rectangle> tab_rectangle = new Array();
+        //On ajoute le bouton play
+        tab_rectangle.add(new Rectangle(camera.position.x - pausePlayButton.getWidth() / 2,   PTS4.HEIGHT / 4 - pausePlayButton.getHeight(), pausePlayButton.getWidth(), pausePlayButton.getHeight()));
+        //On ajoute le bouton music
+        tab_rectangle.add(new Rectangle(camera.position.x - musicSetting.getWidth() * 2,  PTS4.HEIGHT / 4 + musicSetting.getHeight() / 2, musicSetting.getWidth(), musicSetting.getHeight()));
+        //On ajoute le bouton effets
+        tab_rectangle.add(new Rectangle(camera.position.x + effectsSetting.getWidth(),  PTS4.HEIGHT / 4 + effectsSetting.getHeight() / 2, effectsSetting.getWidth(), effectsSetting.getHeight()));
+        return tab_rectangle;
     }
 }

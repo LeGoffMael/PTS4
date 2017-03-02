@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.LevelManager;
@@ -90,7 +89,7 @@ public class PlayState extends State {
 
         //Si l'écran est touché
         if(Gdx.input.justTouched()) {
-            //Au coordonnées du bouton play
+            //Au coordonnées du bouton pause
             if (bounds_pause.contains(tmp.x, tmp.y)) {
                 gsm.set(new PauseState(gsm, this.level));
             }
@@ -136,7 +135,7 @@ public class PlayState extends State {
         level.render(sb);
 
         //On place le bouton de pause
-        sb.draw(pauseButton, (camera.position.x + camera.viewportWidth / 2) - pauseButton.getWidth() / 10 - 1,   PTS4.HEIGHT / 2 - pauseButton.getHeight() / 10 - 1, pauseButton.getWidth() / 10, pauseButton.getHeight() / 10);
+        sb.draw(pauseButton, (camera.position.x + camera.viewportWidth / 2) - pauseButton.getWidth() - 1,   PTS4.HEIGHT / 2 - pauseButton.getHeight() - 1);
 
         sb.end();
     }
@@ -187,7 +186,7 @@ public class PlayState extends State {
     public Array<Rectangle> getButtonsPosition() {
         Array<Rectangle> tab_rectangle = new Array();
         //On ajoute le bouton de pause
-        tab_rectangle.add(new Rectangle((camera.position.x + camera.viewportWidth / 2) - pauseButton.getWidth() / 10 - 1,   PTS4.HEIGHT / 2 - pauseButton.getHeight() / 10 - 1, pauseButton.getWidth() / 10, pauseButton.getHeight()));
+        tab_rectangle.add(new Rectangle((camera.position.x + camera.viewportWidth / 2) - pauseButton.getWidth() - 1,   PTS4.HEIGHT / 2 - pauseButton.getHeight() - 1, pauseButton.getWidth(), pauseButton.getHeight()));
         return tab_rectangle;
     }
 
