@@ -1,5 +1,6 @@
 package com.pts4.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,7 +32,13 @@ public class PauseState extends State {
 
     @Override
     public void handleInput() {
-
+        //Si l'écran est touché
+        if(Gdx.input.justTouched()) {
+            PlayState playState = new PlayState(gsm);
+            //On remet le niveau
+            playState.setLevel(this.level);
+            gsm.set(playState);
+        }
     }
 
     /**

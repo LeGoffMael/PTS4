@@ -29,8 +29,8 @@ public class GameOverState extends State {
 
         this.background_sky = new Texture("images/backgrounds/day/daySky.png");
         this.background_ground = new Texture("images/backgrounds/day/dayGround.png");
-        this.playBtn = new Texture("images/playBtn.png");
-        this.menuBtn = new Texture("images/menuBtn.png");
+        this.playBtn = new Texture("images/buttons/playBtn.png");
+        this.menuBtn = new Texture("images/buttons/menuBtn.png");
         this.level = lm;
         this.camera = this.level.getCamera();
     }

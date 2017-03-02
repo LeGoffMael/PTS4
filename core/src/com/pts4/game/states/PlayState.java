@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
@@ -27,6 +28,8 @@ public class PlayState extends State {
     //Represente si le joueur à perdu
     private boolean gameOver = false;
 
+    private Texture pauseButton;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
 
@@ -36,6 +39,8 @@ public class PlayState extends State {
         level = new LevelManager(this.getCamera());
 
         this.timeCount = 0;
+
+        this.pauseButton = new Texture("images/buttons/pauseBtn.png");
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
 
@@ -78,6 +83,18 @@ public class PlayState extends State {
 
     @Override
     public void handleInput() {
+        //Représente les coordonnées du bouton
+        Rectangle bounds_pause = new Rectangle(this.getButtonsPosition().first());
+        Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(tmp);
+
+        //Si l'écran est touché
+        if(Gdx.input.justTouched()) {
+            //Au coordonnées du bouton play
+            if (bounds_pause.contains(tmp.x, tmp.y)) {
+                gsm.set(new PauseState(gsm, this.level));
+            }
+        }
     }
 
     @Override
@@ -117,6 +134,9 @@ public class PlayState extends State {
 
         //On affiche les éléments composants le niveau
         level.render(sb);
+
+        //On place le bouton de pause
+        sb.draw(pauseButton, (camera.position.x + camera.viewportWidth / 2) - pauseButton.getWidth() / 10 - 1,   PTS4.HEIGHT / 2 - pauseButton.getHeight() / 10 - 1, pauseButton.getWidth() / 10, pauseButton.getHeight() / 10);
 
         sb.end();
     }
@@ -164,7 +184,17 @@ public class PlayState extends State {
     }
 
     @Override
-    public Array<Rectangle> getButtonsPosition() {return null;}
+    public Array<Rectangle> getButtonsPosition() {
+        Array<Rectangle> tab_rectangle = new Array();
+        //On ajoute le bouton de pause
+        tab_rectangle.add(new Rectangle((camera.position.x + camera.viewportWidth / 2) - pauseButton.getWidth() / 10 - 1,   PTS4.HEIGHT / 2 - pauseButton.getHeight() / 10 - 1, pauseButton.getWidth() / 10, pauseButton.getHeight()));
+        return tab_rectangle;
+    }
+
+    public void setLevel(LevelManager lvl) {
+        this.level = lvl;
+        this.camera = this.level.getCamera();
+    }
 
     public LevelManager getLevel() {return this.level; }
 }
