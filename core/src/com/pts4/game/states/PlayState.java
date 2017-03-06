@@ -175,6 +175,7 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
+        System.out.println("Play State Disposed");
     }
 
     @Override

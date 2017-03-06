@@ -108,6 +108,7 @@ public class GameOverState extends State {
         playBtn.dispose();
         menuBtn.dispose();
         level.dispose();
+        System.out.println("Game Over State Disposed");
     }
 
     /**

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
+import com.pts4.game.Singleton;
 
 /**
  * Created by Le Goff Maël on 28/02/2017.
@@ -36,8 +37,6 @@ public class PauseState extends State {
         this.camera = this.level.getCamera();
 
         this.pausePlayButton = new Texture("images/buttons/pausePlayBtn.png");
-        this.musicSetting = new Texture("images/buttons/soundBtn.png");
-        this.effectsSetting = new Texture("images/buttons/soundBtn.png");
 
         //La police
         font = new BitmapFont(Gdx.files.internal("fonts/text.fnt"));
@@ -66,11 +65,17 @@ public class PauseState extends State {
             }
             //Au coordonnées du bouton music
             if (bounds_music.contains(tmp.x, tmp.y)) {
-                //TODO
+                if(Singleton.getInstance().getMusic())
+                    Singleton.getInstance().setMusic(false);
+                else
+                    Singleton.getInstance().setMusic(true);
             }
             //Au coordonnées du bouton effets
             if (bounds_effects.contains(tmp.x, tmp.y)) {
-                //TODO
+                if(Singleton.getInstance().getEffects())
+                    Singleton.getInstance().setEffects(false);
+                else
+                    Singleton.getInstance().setEffects(true);
             }
         }
     }
@@ -88,6 +93,16 @@ public class PauseState extends State {
      */
     @Override
     public void render(SpriteBatch sb) {
+        if(Singleton.getInstance().getMusic())
+            this.musicSetting = new Texture("images/buttons/soundBtn.png");
+        else
+            this.musicSetting = new Texture("images/buttons/muteBtn.png");
+
+        if(Singleton.getInstance().getEffects())
+            this.effectsSetting = new Texture("images/buttons/soundBtn.png");
+        else
+            this.effectsSetting = new Texture("images/buttons/muteBtn.png");
+
         //définie la matrice de projection des batch
         sb.setProjectionMatrix(camera.combined);
 
@@ -122,6 +137,7 @@ public class PauseState extends State {
         pausePlayButton.dispose();
         musicSetting.dispose();
         effectsSetting.dispose();
+        System.out.println("Pause State Disposed");
     }
 
     /**

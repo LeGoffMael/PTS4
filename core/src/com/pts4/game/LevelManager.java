@@ -51,15 +51,15 @@ public class LevelManager {
 
         this.x_last = (int)this.camera.position.x  + 1;
 
-        background_sky = new Texture("images/backgrounds/day/daySky.png");
-        background_ground = new Texture("images/backgrounds/day/dayGround.png");
+        background_sky = Singleton.getInstance().getThemeManager().getTheme().getBackgroundSky();
+        background_ground = Singleton.getInstance().getThemeManager().getTheme().getBackgroundGround();
         //On détermine la premiere position
         groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);
         //On détermine la seconde position par rapport à la première
         groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + PTS4.WIDTH / 2, 0);
 
-        this.train = new Texture("images/trains/train.png");
-        this.train_front = new Texture("images/trains/train_front.png");
+        this.train = Singleton.getInstance().getThemeManager().getTheme().getTrain();
+        this.train_front = Singleton.getInstance().getThemeManager().getTheme().getFrontTrain();
         this.character = new Character(50 , this.train.getHeight());
 
         this.rand = new Random();
@@ -237,7 +237,6 @@ public class LevelManager {
         for (int i = 0; i < tab_bats.size; i++) {
             //Si les bats sont hors de l'écran
             if(cam.position.x - (cam.viewportWidth / 2) > tab_bats.get(i).getPosition().x + tab_bats.get(i).getTextureOfRegion().getRegionWidth()) {
-                tab_bats.get(i).dispose();
                 tab_bats.removeIndex(i);
             }
 
@@ -246,7 +245,6 @@ public class LevelManager {
         for (int i = 0; i < tab_tLights.size; i++) {
             //Si le feu est hors de l'écran
             if(cam.position.x - (cam.viewportWidth / 2) > tab_tLights.get(i).getPosition().x + tab_tLights.get(i).getTexture().getWidth()) {
-                tab_tLights.get(i).dispose();
                 tab_tLights.removeIndex(i);
             }
         }
@@ -272,17 +270,6 @@ public class LevelManager {
      * Vide la mémoire
      */
     public void dispose() {
-        this.background_sky.dispose();
-        this.background_ground.dispose();
-        this.train.dispose();
-        this.train_front.dispose();
-        this.character.dispose();
-        for (int i = 0; i < batsArray.size; i++) {
-            batsArray.get(i).dispose();
-        }
-        for (int i = 0; i < tLightsArray.size; i++) {
-            tLightsArray.get(i).dispose();
-        }
     }
 
     public void setMakeObsatcles (Boolean b) { this.makeObsatcles = b; }

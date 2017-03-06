@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.pts4.game.PTS4;
+import com.pts4.game.Singleton;
 
 /**
  * Created by Le Goff Maël on 22/02/2017.
@@ -26,8 +27,8 @@ public class MenuState extends State {
         //On "zoom" la caméra à la moitié de la largeur et la moitié de la longueur (permet de ne pas voir toutes la map mais que la partie zoomée)
         camera.setToOrtho(false, PTS4.WIDTH / 2, PTS4.HEIGHT / 2);
 
-        background_sky = new Texture("images/backgrounds/day/daySky.png");
-        background_ground = new Texture("images/backgrounds/day/dayGround.png");
+        background_sky = Singleton.getInstance().getThemeManager().getTheme().getBackgroundSky();
+        background_ground = Singleton.getInstance().getThemeManager().getTheme().getBackgroundGround();
         //On détermine la premiere position
         groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);
         //On détermine la seconde position par rapport à la première
@@ -88,8 +89,6 @@ public class MenuState extends State {
 
     @Override
     public void dispose() {
-        background_ground.dispose();
-        background_sky.dispose();
         playBtn.dispose();
         System.out.println("Menu State Disposed");
     }
