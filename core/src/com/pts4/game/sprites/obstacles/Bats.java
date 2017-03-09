@@ -25,7 +25,7 @@ public class Bats extends Obstacle {
     public Bats(int x, int y, int z) {
         super(x, y, z);
 
-        img = Singleton.getInstance().getThemeManager().getTheme().getBats();
+        img = Singleton.getInstance().getThemeManager().getTheme().getBats(z);
 
         //L'animation est composée de 3 images et la durée entre chaque est de 0,35 seconde
         batsAnimation = new Animation(new TextureRegion(img), 4, 0.35f);

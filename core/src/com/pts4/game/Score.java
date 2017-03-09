@@ -13,20 +13,19 @@ import java.io.IOException;
 
 public class Score {
     private float scorePlayer;
-    private float scoreMax;
+    private int scoreMax;
 
     //Constructeur de la classe score
     public Score(){
         this.scoreMax = 0;
-        this.scoreMax = this.ReadScoreMax();
+        this.scoreMax = this.readScoreMax();
         this.scorePlayer = 0;
     }
 
 
     //Compteur de score
-    public void setScorePlayer(float dt){
-        dt = dt*10;
-        this.scorePlayer = this.scorePlayer + dt;
+    public void setScorePlayer(float time){
+        this.scorePlayer = time;
     }
 
     public int getScorePlayer(){
@@ -38,15 +37,13 @@ public class Score {
         return this.scoreMax;
     }
 
-
-
     //Sauvegarde du meilleur score
     public void saveScoreMax(){
         FileWriter fileWriter = null;
         BufferedWriter tamponWriter = null;
 
         if(this.scorePlayer > this.scoreMax){
-            this.scoreMax = this.scorePlayer;
+            this.scoreMax = (int)this.scorePlayer;
 
             //Sauvegarde
             try{
@@ -72,7 +69,7 @@ public class Score {
     }
 
     //Lecture du score max dans un fichier
-    public float ReadScoreMax(){
+    public int readScoreMax(){
         FileReader file_reader = null;
         BufferedReader tampon_reader = null;
 

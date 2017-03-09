@@ -23,17 +23,19 @@ import com.pts4.game.Singleton;
 
 public class PauseState extends State {
     private LevelManager level;
+    private float timeCount;
     private Texture pausePlayButton, musicSetting, effectsSetting;
 
     public static BitmapFont font, shadow;
 
-    public PauseState(GameStateManager gsm, LevelManager lm) {
+    public PauseState(GameStateManager gsm, LevelManager lm, float time) {
         super(gsm);
 
         //On "zoom" la caméra à la moitié de la largeur et la moitié de la longueur (permet de ne pas voir toutes la map mais que la partie zoomée)
         camera.setToOrtho(false, PTS4.WIDTH / 2, PTS4.HEIGHT / 2);
 
         this.level = lm;
+        this.timeCount = time;
         this.camera = this.level.getCamera();
 
         this.pausePlayButton = new Texture("images/buttons/pausePlayBtn.png");
@@ -61,6 +63,8 @@ public class PauseState extends State {
                 PlayState playState = new PlayState(gsm);
                 //On remet le niveau
                 playState.setLevel(this.level);
+                //On remet le temps
+                playState.setTime(this.timeCount);
                 gsm.set(playState);
             }
             //Au coordonnées du bouton music

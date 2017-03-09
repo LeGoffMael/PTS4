@@ -1,7 +1,12 @@
 package com.pts4.game.themes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Le Goff Maël on 03/03/2017.
@@ -10,24 +15,55 @@ import com.badlogic.gdx.graphics.Texture;
 public class Theme {
     protected String name;
 
-    protected Texture backgroundSky, backgroundGround, train, train_front, character, bats, trafficLight;
-    protected Sound music, die, jump, slide;
+    protected Texture backgroundSky, backgroundGround, train, train_front;
+    protected Array<Texture> character, bats, trafficLight;
+    protected Music music;
+    protected Sound die, jump, slide;
+    protected String musicPath, diePath, jumpPath, slidePath;
 
+    /**
+     * Par défaut
+     * @param s
+     */
     public Theme(String s) {
         this.name = s;
 
-        this.backgroundSky = null;
-        this.backgroundGround = null;
+        this.backgroundSky = new Texture("images/default.jpg");
+        this.backgroundGround = new Texture("images/default.jpg");
         this.train = new Texture("images/trains/train.png");
         this.train_front = new Texture("images/trains/train_front.png");
-        this.character = new Texture("images/character/character_default.png");
-        this.bats = new Texture("images/obstacles/bats.png");
-        this.trafficLight = null;
+
+        this.character = new Array<Texture>();
+            this.character.add(new Texture("images/character/character_default.png")); //Default
+            this.character.add(new Texture("images/character/characterJump.png")); //Jump
+            this.character.add(new Texture("images/character/character_default.png")); //Slide
+            this.character.add(new Texture("images/character/character_default.png")); //ChangePlan
+
+        this.bats = new Array<Texture>();
+            this.bats.add(new Texture("images/obstacles/bats.png"));
+            this.bats.add(new Texture("images/obstacles/bats.png"));
+            this.bats.add(new Texture("images/obstacles/bats.png"));
+
+        this.trafficLight = new Array<Texture>();
+            this.trafficLight.add(new Texture("images/obstacles/feuVert.png"));
+            this.trafficLight.add(new Texture("images/obstacles/feuOrange.png"));
+            this.trafficLight.add(new Texture("images/obstacles/feuRouge.png"));
 
         this.music = null;
         this.die = null;
         this.jump = null;
         this.slide = null;
+    }
+
+    public String getTexturePath(Texture texture) {
+        String path = null;
+        TextureData textureData = texture.getTextureData();
+        if (textureData instanceof FileTextureData) {
+            FileTextureData fileTextureData = (FileTextureData) textureData;
+            path = fileTextureData.getFileHandle().path();
+
+        }
+        return path;
     }
 
     public String getName() {
@@ -66,60 +102,204 @@ public class Theme {
         this.train_front = train_front;
     }
 
-    public Texture getCharacter() {
-        return character;
+    /**
+     * Retourne la texture du personnage suivant l'état passé en paramètre
+     * @param state (default,jump,slide,changePlan)
+     * @return
+     */
+    public Texture getCharacter(String state) {
+        Texture t = new Texture("images/default.jpg");
+
+        if(state.equals("default"))
+            t = this.character.first();
+        else if(state.equals("jump"))
+            t = this.character.get(1);
+        else if(state.equals("slide"))
+            t = this.character.get(2);
+        else if(state.equals("changePlan"))
+            t = this.character.get(3);
+
+        return t;
     }
 
-    public void setCharacter(Texture character) {
-        this.character = character;
+    /**
+     * Change la texture du personnage à son état
+     * @param character la texture
+     * @param state (default,jump,slide,changePlan)
+     */
+    public void setCharacter(Texture character, String state) {
+        if(state.equals("default"))
+            this.character.set(0, character);
+        else if(state.equals("jump"))
+            this.character.set(1, character);
+        else if(state.equals("slide"))
+            this.character.set(2, character);
+        else if(state.equals("changePlan"))
+            this.character.set(3, character);
     }
 
-    public Texture getBats() {
-        return bats;
+    /**
+     * Retourne la texture des bats en fonction de sa position z
+     * @param z (1,2,3)
+     * @return
+     */
+    public Texture getBats(int z) {
+        Texture t = new Texture("images/default.jpg");
+
+        if(z == 1)
+            t = this.bats.first();
+        else if(z == 2)
+            t = this.bats.get(1);
+        else if(z == 3)
+            t = this.bats.get(2);
+
+        return t;
     }
 
-    public void setBats(Texture bats) {
-        this.bats = bats;
+    /**
+     * Change la texture des bats en fonction de sa position z
+     * @param bats la texture
+     * @param z (1,2,3)
+     */
+    public void setBats(Texture bats, int z) {
+        if(z == 1)
+            this.bats.set(0, bats);
+        else if(z == 2)
+            this.bats.set(1, bats);
+        else if(z == 3)
+            this.bats.set(2, bats);
     }
 
-    public Texture getTrafficLight() {
-        return trafficLight;
+    /**
+     * Retourne la texture du feu en fonction de sa position z
+     * @param z (1,2,3)
+     * @return
+     */
+    public Texture getTrafficLight(int z) {
+        Texture t = new Texture("images/default.jpg");
+
+        if(z == 1)
+            t = this.trafficLight.first();
+        else if(z == 2)
+            t = this.trafficLight.get(1);
+        else if(z == 3)
+            t = this.trafficLight.get(2);
+
+        return t;
     }
 
-    public void setTrafficLight(Texture trafficLight) {
-        this.trafficLight = trafficLight;
+    /**
+     * Change la texture du feu en fonction de sa position z
+     * @param trafficLight la texture
+     * @param z (1,2,3)
+     */
+    public void setTrafficLight(Texture trafficLight, int z) {
+        if(z == 1)
+            this.trafficLight.set(0, trafficLight);
+        else if(z == 2)
+            this.trafficLight.set(1, trafficLight);
+        else if(z == 3)
+            this.trafficLight.set(2, trafficLight);
     }
 
-    public Sound getMusic() {
+    public Music getMusic() {
         return music;
-    }
-
-    public void setMusic(Sound music) {
-        this.music = music;
     }
 
     public Sound getDie() {
         return die;
     }
 
-    public void setDie(Sound die) {
-        this.die = die;
-    }
-
     public Sound getJump() {
         return jump;
-    }
-
-    public void setJump(Sound jump) {
-        this.jump = jump;
     }
 
     public Sound getSlide() {
         return slide;
     }
 
-    public void setSlide(Sound slide) {
-        this.slide = slide;
+    public void setMusic(String musicPath) {
+        this.musicPath = musicPath;
+        if(!(this.musicPath.equals("null")))
+            this.music = Gdx.audio.newMusic(Gdx.files.internal(this.musicPath));
+    }
+
+    public void setDie(String diePath) {
+        this.diePath = diePath;
+        if(!(this.diePath.equals("null")))
+            this.die = Gdx.audio.newSound(Gdx.files.internal(this.diePath));
+    }
+
+    public void setJump(String jumpPath) {
+        this.jumpPath = jumpPath;
+        if(!(this.jumpPath.equals("null")))
+            this.jump = Gdx.audio.newSound(Gdx.files.internal(this.jumpPath));
+    }
+
+    public void setSlide(String slidePath) {
+        this.slidePath = slidePath;
+        if(!(this.slidePath.equals("null")))
+            this.slide = Gdx.audio.newSound(Gdx.files.internal(this.slidePath));
+    }
+
+    public String getMusicPath() {
+        return musicPath;
+    }
+
+    public String getDiePath() {
+        return diePath;
+    }
+
+    public String getJumpPath() {
+        return jumpPath;
+    }
+
+    public String getSlidePath() {
+        return slidePath;
+    }
+
+    /**
+     * Retourne les chemin de tous les objets composant le thème
+     * @return
+     */
+    public String getAllPath() {
+        String res = "";
+
+        res += this.getName();
+        res += ";";
+
+        //Les Textures
+        res += this.getTexturePath(this.backgroundSky);
+        res += ";";
+        res += this.getTexturePath(this.backgroundGround);
+        res += ";";
+        res += this.getTexturePath(this.train);
+        res += ";";
+        res += this.getTexturePath(this.train_front);
+        res += ";";
+        for(int i=0; i<this.character.size; i++) {
+            res += this.getTexturePath(this.character.get(i));
+            res += ";";
+        }
+        for(int i=0; i<this.bats.size; i++) {
+            res += this.getTexturePath(this.bats.get(i));
+            res += ";";
+        }
+        for(int i=0; i<this.trafficLight.size; i++) {
+            res += this.getTexturePath(this.trafficLight.get(i));
+            res += ";";
+        }
+
+        //Les Sons
+        res += this.getMusicPath();
+        res += ";";
+        res += this.getDiePath();
+        res += ";";
+        res += this.getJumpPath();
+        res += ";";
+        res += this.getSlidePath();
+
+        return res;
     }
 
     public void dispose() {
@@ -127,9 +307,12 @@ public class Theme {
         this.backgroundGround.dispose();
         this.train.dispose();
         this.train_front.dispose();
-        this.character.dispose();
-        this.bats.dispose();
-        this.trafficLight.dispose();
+        for(int i=0; i<this.character.size; i++)
+            this.character.get(i).dispose();
+        for(int i=0; i<this.bats.size; i++)
+            this.bats.get(i).dispose();
+        for(int i=0; i<this.trafficLight.size; i++)
+            this.trafficLight.get(i).dispose();
         this.music.dispose();
         this.die.dispose();
         this.jump.dispose();

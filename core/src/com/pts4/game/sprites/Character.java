@@ -3,6 +3,7 @@ package com.pts4.game.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.pts4.game.Singleton;
 
 /**
  * Created by Le Goff Maël on 23/02/2017.
@@ -25,7 +26,7 @@ public class Character {
         this.position = new Vector3(x, y, 2);
         this.velocity = new Vector3(0, 0, 0);
 
-        this.character = new Texture("images/character/character_default.png");
+        this.character = Singleton.getInstance().getThemeManager().getTheme().getCharacter("default");
 
         //La hitbox du personnage
         hitbox = new Rectangle(x, y, character.getWidth(), character.getHeight());
@@ -66,7 +67,7 @@ public class Character {
     public void jump() {
         if (position.y == y_min) {
             velocity.y = 310;
-            this.character = new Texture("images/character/characterJump.png");
+            this.character = Singleton.getInstance().getThemeManager().getTheme().getCharacter("jump");
         }
     }
 
@@ -74,6 +75,7 @@ public class Character {
      * Fait glisser le personnage
      */
     public void slide() {
+        this.character = Singleton.getInstance().getThemeManager().getTheme().getCharacter("slide");
     }
 
     /**
@@ -91,6 +93,7 @@ public class Character {
             if (position.z > 1)
                 position.z -= 1;
         }
+        this.character = Singleton.getInstance().getThemeManager().getTheme().getCharacter("changePlan");
     }
 
     /**

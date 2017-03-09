@@ -20,7 +20,7 @@ public class PlayState extends State {
     private LevelManager level;
 
     //Represente le temps passé dans le niveau
-    private float timeCount;
+    private float timeCount = 0;
     //Represente le score
     private Score scorePlayer = new Score();
 
@@ -36,8 +36,6 @@ public class PlayState extends State {
         camera.setToOrtho(false, PTS4.WIDTH / 2, PTS4.HEIGHT / 2);
 
         level = new LevelManager(this.getCamera());
-
-        this.timeCount = 0;
 
         this.pauseButton = new Texture("images/buttons/pauseBtn.png");
 
@@ -91,7 +89,7 @@ public class PlayState extends State {
         if(Gdx.input.justTouched()) {
             //Au coordonnées du bouton pause
             if (bounds_pause.contains(tmp.x, tmp.y)) {
-                gsm.set(new PauseState(gsm, this.level));
+                gsm.set(new PauseState(gsm, this.level, this.timeCount));
             }
         }
     }
@@ -101,7 +99,7 @@ public class PlayState extends State {
         this.timeCount += dt;
 
         //Score player
-        this.scorePlayer.setScorePlayer(dt);
+        this.scorePlayer.setScorePlayer(this.timeCount);
         System.out.println(this.scorePlayer.getScorePlayer());
 
         handleInput();
@@ -114,8 +112,11 @@ public class PlayState extends State {
         checkCollides(this.level);
 
         //Si on a perdu on va dans l'état Game Over
-        if (gameOver == true)
+        if (gameOver == true) {
             gsm.set(new GameOverState(gsm, getLevel()));
+            if(this.scorePlayer.getScorePlayer() > this.scorePlayer.getScoreMax())
+                this.scorePlayer.saveScoreMax();
+        }
 
         //On déplace la camera
         camera.position.x = camera.position.x + 100 * dt;
@@ -197,4 +198,8 @@ public class PlayState extends State {
     }
 
     public LevelManager getLevel() {return this.level; }
+
+    public void setTime(float time) {
+        this.timeCount = time;
+    }
 }
