@@ -1,9 +1,6 @@
 package com.pts4.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.pts4.game.themes.Theme;
 import com.pts4.game.themes.ThemeManager;
 
@@ -17,9 +14,9 @@ import java.io.IOException;
  * Created by Le Goff Maël on 06/03/2017.
  */
 
-public class Singleton {
+public class Settings {
     /** L'instance statique */
-    private static Singleton instance;
+    private static Settings instance;
 
     private ThemeManager themeManager;
     private boolean music;
@@ -28,7 +25,7 @@ public class Singleton {
     /** Constructeur redéfini comme étant privé pour interdire
      * son appel et forcer à passer par la méthode <link
      */
-    private Singleton() {
+    private Settings() {
         this.themeManager = new ThemeManager();
         this.getThemeManager().setThemeDay();
         this.music = true;
@@ -36,12 +33,12 @@ public class Singleton {
         this.load();
     }
 
-    /** Récupère l'instance unique de la class Singleton.<p>
+    /** Récupère l'instance unique de la class Settings.<p>
      * Remarque : le constructeur est rendu inaccessible
      */
-    public static Singleton getInstance() {
+    public static Settings getInstance() {
         if (null == instance) { // Premier appel
-            instance = new Singleton();
+            instance = new Settings();
         }
         return instance;
     }

@@ -51,15 +51,15 @@ public class LevelManager {
 
         this.x_last = (int)this.camera.position.x  + 1;
 
-        background_sky = Singleton.getInstance().getThemeManager().getTheme().getBackgroundSky();
-        background_ground = Singleton.getInstance().getThemeManager().getTheme().getBackgroundGround();
+        background_sky = Settings.getInstance().getThemeManager().getTheme().getBackgroundSky();
+        background_ground = Settings.getInstance().getThemeManager().getTheme().getBackgroundGround();
         //On détermine la premiere position
         groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);
         //On détermine la seconde position par rapport à la première
         groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + PTS4.WIDTH / 2, 0);
 
-        this.train = Singleton.getInstance().getThemeManager().getTheme().getTrain();
-        this.train_front = Singleton.getInstance().getThemeManager().getTheme().getFrontTrain();
+        this.train = Settings.getInstance().getThemeManager().getTheme().getTrain();
+        this.train_front = Settings.getInstance().getThemeManager().getTheme().getFrontTrain();
         this.character = new Character(50 , this.train.getHeight());
 
         this.rand = new Random();

@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pts4.game.LevelManager;
 import com.pts4.game.PTS4;
-import com.pts4.game.Singleton;
+import com.pts4.game.Settings;
 
 /**
  * Created by Le Goff Maël on 28/02/2017.
@@ -69,17 +69,17 @@ public class PauseState extends State {
             }
             //Au coordonnées du bouton music
             if (bounds_music.contains(tmp.x, tmp.y)) {
-                if(Singleton.getInstance().getMusic())
-                    Singleton.getInstance().setMusic(false);
+                if(Settings.getInstance().getMusic())
+                    Settings.getInstance().setMusic(false);
                 else
-                    Singleton.getInstance().setMusic(true);
+                    Settings.getInstance().setMusic(true);
             }
             //Au coordonnées du bouton effets
             if (bounds_effects.contains(tmp.x, tmp.y)) {
-                if(Singleton.getInstance().getEffects())
-                    Singleton.getInstance().setEffects(false);
+                if(Settings.getInstance().getEffects())
+                    Settings.getInstance().setEffects(false);
                 else
-                    Singleton.getInstance().setEffects(true);
+                    Settings.getInstance().setEffects(true);
             }
         }
     }
@@ -97,12 +97,12 @@ public class PauseState extends State {
      */
     @Override
     public void render(SpriteBatch sb) {
-        if(Singleton.getInstance().getMusic())
+        if(Settings.getInstance().getMusic())
             this.musicSetting = new Texture("images/buttons/soundBtn.png");
         else
             this.musicSetting = new Texture("images/buttons/muteBtn.png");
 
-        if(Singleton.getInstance().getEffects())
+        if(Settings.getInstance().getEffects())
             this.effectsSetting = new Texture("images/buttons/soundBtn.png");
         else
             this.effectsSetting = new Texture("images/buttons/muteBtn.png");
