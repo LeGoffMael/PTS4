@@ -12,9 +12,8 @@ import com.badlogic.gdx.utils.Array;
  * Created by Le Goff Maël on 03/03/2017.
  */
 
-public class Theme {
+public abstract class Theme {
     protected String name;
-
     protected Texture backgroundSky, backgroundGround, train, train_front;
     protected Array<Texture> character, bats, trafficLight;
     protected Music music;
@@ -27,32 +26,6 @@ public class Theme {
      */
     public Theme(String s) {
         this.name = s;
-
-        this.backgroundSky = new Texture("images/default.jpg");
-        this.backgroundGround = new Texture("images/default.jpg");
-        this.train = new Texture("images/trains/train.png");
-        this.train_front = new Texture("images/trains/train_front.png");
-
-        this.character = new Array<Texture>();
-            this.character.add(new Texture("images/character/character_default.png")); //Default
-            this.character.add(new Texture("images/character/characterJump.png")); //Jump
-            this.character.add(new Texture("images/character/character_default.png")); //Slide
-            this.character.add(new Texture("images/character/character_default.png")); //ChangePlan
-
-        this.bats = new Array<Texture>();
-            this.bats.add(new Texture("images/obstacles/bats.png"));
-            this.bats.add(new Texture("images/obstacles/bats.png"));
-            this.bats.add(new Texture("images/obstacles/bats.png"));
-
-        this.trafficLight = new Array<Texture>();
-            this.trafficLight.add(new Texture("images/obstacles/feuVert.png"));
-            this.trafficLight.add(new Texture("images/obstacles/feuOrange.png"));
-            this.trafficLight.add(new Texture("images/obstacles/feuRouge.png"));
-
-        this.music = null;
-        this.die = null;
-        this.jump = null;
-        this.slide = null;
     }
 
     public String getTexturePath(Texture texture) {

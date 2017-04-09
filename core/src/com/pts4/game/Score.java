@@ -12,24 +12,24 @@ import java.io.IOException;
  */
 
 public class Score {
-    private float scorePlayer;
+    private float score;
     private int scoreMax;
 
     //Constructeur de la classe score
     public Score(){
         this.scoreMax = 0;
         this.scoreMax = this.readScoreMax();
-        this.scorePlayer = 0;
+        this.score = 0;
     }
 
 
     //Compteur de score
-    public void setScorePlayer(float time){
-        this.scorePlayer = time;
+    public void setScore(float time){
+        this.score = time;
     }
 
-    public int getScorePlayer(){
-        int temp = (int)Math.floor(this.scorePlayer);
+    public int getScore(){
+        int temp = (int)Math.floor(this.score);
         return temp;
     }
 
@@ -42,8 +42,8 @@ public class Score {
         FileWriter fileWriter = null;
         BufferedWriter tamponWriter = null;
 
-        if(this.scorePlayer > this.scoreMax){
-            this.scoreMax = (int)this.scorePlayer;
+        if(this.score > this.scoreMax){
+            this.scoreMax = (int)this.score;
 
             //Sauvegarde
             try{

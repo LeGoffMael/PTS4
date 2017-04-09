@@ -1,6 +1,5 @@
 package com.pts4.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.pts4.game.themes.Theme;
 import com.pts4.game.themes.ThemeManager;
 
@@ -120,7 +119,7 @@ public class Settings {
             tampon_writer = new BufferedWriter(file_writer);
 
             //On enregistre les paramètres du thème
-            tampon_writer.write(theme.getAllPath());
+            tampon_writer.write(theme.getName());
 
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -189,32 +188,7 @@ public class Settings {
                 if (ligne == null)
                     break;
 
-                //On assigne les valeurs trouvées au theme courant
-                String themeData[] = ligne.split(";");
-
-                Theme themeCurrent = new Theme(themeData[0]);
-
-                //Les Textures
-                themeCurrent.setBackgroundSky(new Texture(themeData[1]));
-                themeCurrent.setBackgroundGround(new Texture(themeData[2]));
-                themeCurrent.setTrain(new Texture(themeData[3]));
-                themeCurrent.setFrontTrain(new Texture(themeData[4]));
-                themeCurrent.setCharacter(new Texture(themeData[5]),"default");
-                themeCurrent.setCharacter(new Texture(themeData[6]),"jump");
-                themeCurrent.setCharacter(new Texture(themeData[7]),"slide");
-                themeCurrent.setCharacter(new Texture(themeData[8]),"changePlan");
-                themeCurrent.setBats(new Texture(themeData[9]),1);
-                themeCurrent.setBats(new Texture(themeData[10]),2);
-                themeCurrent.setBats(new Texture(themeData[11]),3);
-                themeCurrent.setTrafficLight(new Texture(themeData[12]),1);
-                themeCurrent.setTrafficLight(new Texture(themeData[13]),2);
-                themeCurrent.setTrafficLight(new Texture(themeData[14]),3);
-
-                //Les Sons
-                themeCurrent.setMusic(themeData[15]);
-                themeCurrent.setDie(themeData[16]);
-                themeCurrent.setJump(themeData[17]);
-                themeCurrent.setSlide(themeData[18]);
+                Theme themeCurrent = this.getThemeManager().getThemeString("ligne");
 
                 this.getThemeManager().push(themeCurrent);
             }

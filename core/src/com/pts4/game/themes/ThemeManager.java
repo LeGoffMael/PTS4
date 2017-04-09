@@ -1,8 +1,6 @@
 package com.pts4.game.themes;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.pts4.game.PTS4;
 
 import java.util.Stack;
 
@@ -49,11 +47,21 @@ public class ThemeManager {
         return this.themes.firstElement();
     }
 
+    public Theme getThemeString(String name) {
+        Theme res = null;
+
+        if (name.equals("default")) {
+            res = new DefaultTheme();
+        }
+
+        return res;
+    }
+
     /**
      * Crée et applique le thème jour
      */
     public void setThemeDay() {
-        Theme day = new Theme("day");
+        Theme day = new DefaultTheme();
         day.setBackgroundSky(new Texture("images/backgrounds/day/daySky.png"));
         day.setBackgroundGround(new Texture("images/backgrounds/day/dayGround.png"));
         this.push(day);

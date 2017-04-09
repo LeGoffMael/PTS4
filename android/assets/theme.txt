@@ -1,1 +1,1 @@
-day;images/backgrounds/day/daySky.png;images/backgrounds/day/dayGround.png;images/trains/train.png;images/trains/train_front.png;images/character/character_default.png;images/character/characterJump.png;images/character/character_default.png;images/character/character_default.png;images/obstacles/bats.png;images/obstacles/bats.png;images/obstacles/bats.png;images/obstacles/feuVert.png;images/obstacles/feuOrange.png;images/obstacles/feuRouge.png;null;null;null;null
+default
