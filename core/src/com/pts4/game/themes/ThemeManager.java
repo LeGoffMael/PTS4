@@ -47,16 +47,6 @@ public class ThemeManager {
         return this.themes.firstElement();
     }
 
-    public Theme getThemeString(String name) {
-        Theme res = null;
-
-        if (name.equals("default")) {
-            res = new DefaultTheme();
-        }
-
-        return res;
-    }
-
     /**
      * Crée et applique le thème jour
      */

@@ -187,10 +187,7 @@ public class LevelManager {
 
         //On place le ciel au dessus du sol
         sb.draw(background_sky, camera.position.x - PTS4.WIDTH / 4, PTS4.HEIGHT / 2 - background_sky.getHeight() / 4, PTS4.WIDTH / 2, background_sky.getHeight() / 4);
-
-        //On place les wagons
-        sb.draw(train, camera.position.x - train.getWidth(), 0);
-        sb.draw(train_front, camera.position.x, 0);
+        this.drawTrain(sb);
 
         //On place les obstacles qui sont positionnés plus loin que le personnage
         for(int i = (int)character.getPosition().z; i<=3; i++) {
@@ -204,6 +201,8 @@ public class LevelManager {
         for(int i = 1; i<=character.getPosition().z; i++) {
             depthRender(sb, i, this.batsArray, this.tLightsArray);
         }
+
+        //TODO : Gestion 3d affichage train devant feux
     }
 
     /**
@@ -218,12 +217,21 @@ public class LevelManager {
         for (int i = 0; i < tab_bats.size; i++) {
             if(tab_bats.get(i).getPosition().z == z)
                 sb.draw(tab_bats.get(i).getTextureOfRegion(), tab_bats.get(i).getPosition().x, tab_bats.get(i).getPosition().y);
-        }
+           }
         //On parcourt le tableau de feux tricolores
         for (int i = 0; i < tab_tLights.size; i++) {
             if(tab_tLights.get(i).getPosition().z == z)
                 sb.draw(tab_tLights.get(i).getTexture(), tab_tLights.get(i).getPosition().x, tab_tLights.get(i).getPosition().y);
         }
+    }
+
+    /**
+     * On affiche le train
+     */
+    public void drawTrain(SpriteBatch sb) {
+        //On place les wagons
+        sb.draw(train, camera.position.x - train.getWidth(), 0);
+        sb.draw(train_front, camera.position.x, 0);
     }
 
     /**

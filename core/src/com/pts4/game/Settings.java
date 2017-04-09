@@ -1,5 +1,6 @@
 package com.pts4.game;
 
+import com.pts4.game.themes.DefaultTheme;
 import com.pts4.game.themes.Theme;
 import com.pts4.game.themes.ThemeManager;
 
@@ -8,18 +9,21 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Le Goff Maël on 06/03/2017.
  */
 
 public class Settings {
-    /** L'instance statique */
+    //L'instance statique
     private static Settings instance;
 
     private ThemeManager themeManager;
     private boolean music;
     private boolean effects;
+    private List<Theme> themesEnabled;
 
     /** Constructeur redéfini comme étant privé pour interdire
      * son appel et forcer à passer par la méthode <link
@@ -29,6 +33,8 @@ public class Settings {
         this.getThemeManager().setThemeDay();
         this.music = true;
         this.effects = true;
+        this.themesEnabled = new ArrayList<Theme>();
+            this.themesEnabled.add(new DefaultTheme());
         this.load();
     }
 
@@ -66,6 +72,22 @@ public class Settings {
     public void setEffects(boolean effects) {
         this.effects = effects;
         this.save();
+    }
+
+    public List<Theme> getThemesEnabled() {
+        return this.themesEnabled;
+    }
+
+    public Theme getThemeString(String name) {
+        Theme res = null;
+
+        for(int i = 0; i<this.themesEnabled.size(); i++) {
+            if (name.equals(this.themesEnabled.get(i).getName())) {
+                res = this.themesEnabled.get(i);
+            }
+        }
+
+        return res;
     }
 
     /**
@@ -188,7 +210,7 @@ public class Settings {
                 if (ligne == null)
                     break;
 
-                Theme themeCurrent = this.getThemeManager().getThemeString("ligne");
+                Theme themeCurrent = this.getThemeString("ligne");
 
                 this.getThemeManager().push(themeCurrent);
             }

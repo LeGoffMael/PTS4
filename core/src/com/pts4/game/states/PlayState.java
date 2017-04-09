@@ -30,7 +30,7 @@ public class PlayState extends State {
 
     private Texture pauseButton;
 
-    public static BitmapFont big_font, big_shadow, little_font, little_shadow;
+    public static BitmapFont big_font, big_shadow;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -47,12 +47,6 @@ public class PlayState extends State {
         big_font.getData().setScale(.75f, .75f);
         big_shadow = new BitmapFont(Gdx.files.internal("fonts/shadow.fnt"));
         big_shadow.getData().setScale(.75f, .75f);
-
-        //La petite police
-        little_font = big_font;
-        little_font.getData().setScale(.50f, .50f);
-        little_shadow = little_font;
-        little_shadow.getData().setScale(.50f, .50f);
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
 
@@ -115,7 +109,6 @@ public class PlayState extends State {
 
         //Score player
         this.score.setScore(this.timeCount);
-        System.out.println(this.score.getScore());
 
         handleInput();
 
@@ -128,7 +121,7 @@ public class PlayState extends State {
 
         //Si on a perdu on va dans l'état Game Over
         if (gameOver == true) {
-            gsm.set(new GameOverState(gsm, getLevel()));
+            gsm.set(new GameOverState(gsm, getLevel(), score));
             if(this.score.getScore() > this.score.getScoreMax())
                 this.score.saveScoreMax();
         }

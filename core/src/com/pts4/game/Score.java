@@ -33,7 +33,7 @@ public class Score {
         return temp;
     }
 
-    public float getScoreMax(){
+    public int getScoreMax(){
         return this.scoreMax;
     }
 

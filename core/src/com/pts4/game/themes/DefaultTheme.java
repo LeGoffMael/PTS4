@@ -26,9 +26,9 @@ public class DefaultTheme extends Theme {
         this.character.add(new Texture("images/character/character_default.png")); //ChangePlan
 
         this.bats = new Array<Texture>();
-        this.bats.add(new Texture("images/obstacles/bats/bats.png"));
-        this.bats.add(new Texture("images/obstacles/bats/bats.png"));
-        this.bats.add(new Texture("images/obstacles/bats/bats.png"));
+        this.bats.add(new Texture("images/obstacles/bats/batsGreen.png"));
+        this.bats.add(new Texture("images/obstacles/bats/batsOrange.png"));
+        this.bats.add(new Texture("images/obstacles/bats/batsRed.png"));
 
         this.trafficLight = new Array<Texture>();
         this.trafficLight.add(new Texture("images/obstacles/fire/fireGreen.png"));
